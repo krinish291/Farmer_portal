@@ -22,7 +22,7 @@ class Post(models.Model):
     location = models.CharField(max_length=100,default="")
     category = models.CharField(max_length=15, choices=Category_CHOICES, default='Grains')
     image = models.ImageField(default='kisan.jpg', upload_to='Story_pics')
-
+    blogtype=models.CharField(max_length=500)
     #def __str__(self):
      #   return f'{self.user.username} Post' + self.title
 

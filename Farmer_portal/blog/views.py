@@ -14,7 +14,15 @@ from django.views.generic import (
     DeleteView
 )
 
-
+def typecon(request):
+    ty=request.POST.get('type','')
+    loc=request.POST.get('location','')
+    data ={} 
+    context = {
+        'posts': Post.objects.filter(location=loc,blogtype=ty) ,
+        'data': data,
+    }
+    return render(request, 'blog/home.html', context)
 
 def home(request):
     if request.method == 'POST': 
@@ -74,7 +82,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content','location','category','image']
+    fields = ['title', 'content','location','category','image','blogtype']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -83,7 +91,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content','location','category','image']
+    fields = ['title', 'content','location','category','image','blogtype']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
