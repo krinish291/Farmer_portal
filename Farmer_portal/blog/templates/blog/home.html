@@ -1,17 +1,21 @@
 {% extends "blog/base.html" %}
 {% block content %}
   <form action="/typecon/" method="POST">{% csrf_token %}
-  <select name="type">
-    <option name="Success Story">Success Story</option>
-    <option name="blog">Blog</option>
-  </select>
+  
   <select name="location">
-    <option name="Rajkot">Rajkot</option>
-    <option name="Ahmadabad">ahm</option>
+    <option name="ALL">ALL</option>
+    {% for l in location %}
+    <option name="{{l.location}}">{{l.location}}</option>
+    {% endfor %}
+  </select>
+  <select name="cat">
+    <option name="ALL">ALL</option>
+    {% for l in cat %}
+    <option name="{{l.category}}">{{l.category}}</option>
+    {% endfor %}
   </select>
   <input type="submit" />
   </form>
-
 {% for post in posts %}
     <div id="myTable">
         <article  class="media content-section">

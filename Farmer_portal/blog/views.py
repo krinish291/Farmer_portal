@@ -15,11 +15,28 @@ from django.views.generic import (
 )
 
 def typecon(request):
-    ty=request.POST.get('type','')
+    cat=request.POST.get('cat','')
     loc=request.POST.get('location','')
     data ={} 
-    context = {
-        'posts': Post.objects.filter(location=loc,blogtype=ty) ,
+    if loc=='ALL' and cat=='ALL':
+        context = {
+        'location':Post.objects.values('location').distinct(),
+        'cat':Post.objects.values('category').distinct(),
+        'posts': Post.objects.all(),
+        'data': data,
+        }
+    elif loc!='ALL' and cat=='ALL':
+        context = {
+        'location':Post.objects.values('location').distinct(),
+        'posts': Post.objects.filter(location=loc) ,
+        'cat':Post.objects.values('category').distinct(),
+        'data': data,
+    }        
+    else:
+        context = {
+        'location':Post.objects.values('location').distinct(),
+        'posts': Post.objects.filter(category=cat) ,
+        'cat':Post.objects.values('category').distinct(),
         'data': data,
     }
     return render(request, 'blog/home.html', context)
@@ -52,9 +69,11 @@ def home(request):
     else: 
         data ={} 
     context = {
+        'location':Post.objects.values('location').distinct(),
+        'cat':Post.objects.values('category').distinct(),
         'posts': Post.objects.all(),
         'data': data,
-    }
+        }
     return render(request, 'blog/home.html', context)
 
 class PostListView(ListView):
