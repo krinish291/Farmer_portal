@@ -4,7 +4,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 import json 
 # urllib.request to make a request to api 
 import urllib.request
+from django.http import JsonResponse
 from .models import Post
+from .models import Like
 from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
@@ -16,11 +18,11 @@ from django.views.generic import (
 
 
 
-def home(request):
+'''def home(request):
     if request.method == 'POST': 
-        city = request.POST['city'] 
-        ''' api key might be expired use your own api_key 
-            place api_key in place of appid ="your_api_key_here "  '''
+        city = request.POST.get('city','') 
+         api key might be expired use your own api_key 
+            place api_key in place of appid ="your_api_key_here "  
   
         # source contain JSON data from API 
   
@@ -46,8 +48,9 @@ def home(request):
     context = {
         'posts': Post.objects.all(),
         'data': data,
+        'likes':Like.objects.all(),
     }
-    return render(request, 'blog/home.html', context)
+    return render(request, 'blog/home.html', context)'''
 
 class PostListView(ListView):
     model = Post
@@ -74,7 +77,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content','location','category','image']
+    fields = ['title', 'content','location','seed','fertilizers','treatment_details','category','Sowing_date','Harvest_date','area','net_profit','image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -83,7 +86,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content','location','category','image']
+    fields = ['title', 'content','location','seed','fertilizers','treatment_details','category','Sowing_date','Harvest_date','area','net_profit','image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -107,4 +110,51 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 def about(request):
-    return render(request, 'blog/about.html', {'title': 'About'})
+    if request.method == 'POST': 
+        city = request.POST.get('city','') 
+        ''' api key might be expired use your own api_key 
+            place api_key in place of appid ="your_api_key_here "  '''
+  
+        # source contain JSON data from API 
+  
+        source = urllib.request.urlopen( 
+           "http://api.openweathermap.org/data/2.5/weather?q="+city +"&APPID=47ac36fecbf7e55eee286bef7823f521").read() 
+  
+        # converting JSON data to a dictionary 
+        list_of_data = json.loads(source) 
+        print(list_of_data)
+        if source == None:
+            data="not found"            
+        else:
+        # data for variable list_of_data 
+            data = { 
+                "country_code": str(list_of_data['sys']['country']), 
+                "coordinate": str(list_of_data['coord']['lon']) + ' '
+                            + str(list_of_data['coord']['lat']), 
+                "temp": str(list_of_data['main']['temp']) + 'k', 
+                "pressure": str(list_of_data['main']['pressure']), 
+                "humidity": str(list_of_data['main']['humidity']), 
+            } 
+            print(data) 
+    else: 
+        data ={} 
+    context = {
+        'data': data,
+    }
+    return render(request, 'blog/about.html',context)
+
+def like(request):
+    postid=request.GET.get('postid','')
+    post=Post.objects.get(id=postid)
+    print(post.likes.all())
+    l=Like(user_id=request.user,Post_id=post)
+    l.save()
+    return JsonResponse("success",safe=False)
+
+def disLike(request):
+    print("ret")
+    postid=request.GET.get('postid','')
+    post=Post.objects.get(id=postid)
+    like = Like.objects.filter(user_id=request.user,Post_id=post)
+    like.delete()   
+    return JsonResponse("success",safe=False)
