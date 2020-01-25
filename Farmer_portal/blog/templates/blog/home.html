@@ -14,12 +14,16 @@
         <a class="mr-2" href="#">{{ post.author }}</a>
         <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
         <a class="mr-2" href="#">{{post.location}}</a>
+        {% if not user.is_authenticated %}
+        <div class="feed" id="feed1">
+          <div class="heart " id='H{{post.id}}' rel="like" disabled></div>
+          <div class="likeCount" id="L{{post.id}}" style="margin-top: 0px;">{{post.likes.all|length}}</div>
+        </div>
+        {% endif %}
         {% if user.is_authenticated %}
         <div class="feed" id="feed1">
-
-          <div class="heart " id='H{{post.id}}' rel="like"></div>
+          <div class="heart " id='H{{post.id}}' rel="like" disabled></div>
           <div class="likeCount" id="L{{post.id}}" style="margin-top: 0px;">{{post.likes.all|length}}</div>
-
         </div>
         {% endif %}
       </div>
