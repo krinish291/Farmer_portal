@@ -48,4 +48,12 @@ background-position: right;
 .feed{float:right;  height: 10px; position: relative;}
 a{color: #7ac9ed}
 p{margin: 0px; padding: 0px}
-.likeCount{font-family: 'Georgia', Times, Times New Roman, serif;margin-left: 20px;margin-bottom: 20px;font-size: 16px;color: #999999}
+.likeCount
+{
+    font-family: 'Georgia', Times, Times New Roman, serif;
+   
+    margin-left: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #999999
+}

@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
 
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -66,30 +66,7 @@
       <div class="col-md-4">
         <div class="content-section">
           <div class="row">
-            <form method="post"  class="col-md-6 col-md-offset-3">
-              {% csrf_token %}
-              <div class="input-group">
-                <input type="text" class="form-control" name="city" placeholder="Search">
-
-                <button class="btn btn-default" type="submit">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-
-              </form>
-              </div>
-              
-
-                {% if data %}
-
-                <div class="col-12">
-                  <h3>country code : {{data.country_code}}</h1>
-                    <h5>coordinate : {{data.coordinate}}</h5>
-                    <h5>temp : {{data.temp}} </h5>
-                    <h5>pressure : {{data.pressure}} </h5>
-                    <h5>humidity : {{data.humidity}}</h5>
-                </div>
-
-                {% endif %}
+           
             
           </div>
         </div>
@@ -142,7 +119,7 @@
     });
   </script>
 -->
-  <script>
+ -<script>
     $(document).ready(function(){
       $("#myInput").on("keyup", function() {
         var value = $(this).val().toLowerCase();
@@ -152,39 +129,94 @@
       });
     });
   </script>
-  <script>
-      $(document).ready(function()
-      {
-        
-      $('body').on("click",'.heart',function()
-        {
-          
-          var A=$(this).attr("id");
-          var B=A.split("like");
-            var messageID=B[1];
-            var C=parseInt($("#likeCount"+messageID).html());
-          $(this).css("background-position","")
-            var D=$(this).attr("rel");
-           
-            if(D === 'like') 
-            {      
-            $("#likeCount"+messageID).html(C+1);
-            $(this).addClass("heartAnimation").attr("rel","unlike");
-            
+   <script>
+    /*like toggle*/
+    $(document).ready(function () {
+
+        $('body').on("click", '.heart', function () {
+
+            var A = $(this).attr("id");
+            console.log(A)
+            var B = A.split("H");
+            var messageID = B[1];
+            var C = parseInt($("#L" + messageID).html());
+            console.log(C)
+            console.log(messageID)
+            $(this).css("background-position", "")
+            var D = $(this).attr("rel");
+            console.log(D);
+
+            if (D ==="like") {
+                $.ajax
+                    ({                  
+                        url: 'like/',
+                        type: 'GET',
+                        datatype: "json",
+                        data: {
+                            'postid': messageID
+                        },
+
+
+                        success: function (status) {
+                          console.log(status)
+                            if (status == "success") {
+                                //$.notify("Request Sent", "success");
+                                //$(".btn .btn-default").notify("Request Sent", "success");
+                                $("#L"+messageID).html(C + 1);
+                                $("#H"+messageID).addClass("heartAnimation").attr("rel", "unlike");
+                                console.log("add")
+                                //alert("comment added")
+                            }
+
+
+
+                        },
+                        error: function () {
+                            alert("Whooaaa! Something went wrong..")
+                        },
+                    });
             }
-            else
-            {
-            $("#likeCount"+messageID).html(C-1);
-            $(this).removeClass("heartAnimation").attr("rel","like");
-            $(this).css("background-position","left");
+
+            else {
+              console.log(messageID + "hii")
+                $.ajax
+                    ({
+                        url: 'disLike/',
+                        type: 'GET',
+                        datatype: "json",
+                        contentType: 'application/json',
+                        data:({
+                            'postid': messageID
+                        }),
+
+
+                        success: function (status) {
+                            if (status == "success") {
+                                //$.notify("Request Sent", "success");
+                                //$(".btn .btn-default").notify("Request Sent", "success");
+                                $("#L" + messageID).html(C - 1);
+                                $("#H" + messageID).removeClass("heartAnimation").attr("rel", "like");
+                                $("#H" + messageID).css("background-position", "left");
+                                //alert("comment added")
+                            }
+
+
+
+                        },
+                        error: function () {
+                            alert("Whooaaa! Something went wrong..")
+                        },
+                    });
+
             }
-    
-    
+
+
         });
-    
-    
-      });
-  </script>
+
+
+    });
+
+</script>
 
 </body>
 
