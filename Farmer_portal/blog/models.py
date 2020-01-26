@@ -13,6 +13,8 @@ Category_CHOICES = (
     ('Other','Other'),
     
 )
+
+
 # Create your models here.
 class Post(models.Model):
     title = models.CharField(max_length=100)
@@ -20,9 +22,19 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=100,default="")
-    category = models.CharField(max_length=15, choices=Category_CHOICES, default='Grains')
+    seed = models.CharField(max_length=100,default="")
+    fertilizers = models.CharField(max_length=100,default="")
+    treatment_details  = models.TextField(default="") 
+    category = models.CharField(max_length=15, choices=Category_CHOICES, default='Grains')   
+    Sowing_date = models.DateField(default=timezone.now)
+    Harvest_date = models.DateField(default=timezone.now)
+    area = models.CharField(max_length=123,default="")
+    net_profit = models.CharField(max_length=123,default="")
     image = models.ImageField(default='kisan.jpg', upload_to='Story_pics')
     blogtype=models.CharField(max_length=500)
+    
+    def timeduraction(self):
+        return (Sowing_date - Harvest_date)
     #def __str__(self):
      #   return f'{self.user.username} Post' + self.title
 
@@ -42,3 +54,8 @@ class Post(models.Model):
    
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+
+class Like(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    Post_id = models.ForeignKey(Post, on_delete=models.CASCADE ,related_name="likes")
+   

@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^typecon/$', typecon),
 
 
+    url(r'^like/$',views.like,name='like'),
+    url(r'^disLike/$',views.disLike,name='disLike'),
 ]

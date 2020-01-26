@@ -49,6 +49,7 @@ urlpatterns = [
          ),
          name='password_reset_complete'),
     path('', include('blog.urls')),
+    path('', include('pwa.urls')),
 ]
 
 if settings.DEBUG:
