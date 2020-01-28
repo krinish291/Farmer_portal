@@ -1,12 +1,14 @@
 from django.urls import path
 from django.conf.urls import url
+
 from .views import (
     PostListView,
     PostDetailView,
     PostCreateView,
     PostUpdateView,
     PostDeleteView,
-    UserPostListView
+    UserPostListView,
+    typecon
 )
 from . import views
 
@@ -18,6 +20,9 @@ urlpatterns = [
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('about/', views.about, name='blog-about'),
+    url(r'^typecon/$', typecon),
+
+
     url(r'^like/$',views.like,name='like'),
     url(r'^disLike/$',views.disLike,name='disLike'),
 ]

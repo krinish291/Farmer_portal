@@ -93,8 +93,8 @@ DATABASES = {
         'NAME': 'farmer_portal',
 		'HOST': 'localhost',
 		'PORT': '3306',
-		'USER': 'krinish',
-		'PASSWORD':'shree291',
+		'USER': 'root',
+		'PASSWORD':'',
     
     }
 }

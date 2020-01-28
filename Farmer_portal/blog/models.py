@@ -31,6 +31,7 @@ class Post(models.Model):
     area = models.CharField(max_length=123,default="")
     net_profit = models.CharField(max_length=123,default="")
     image = models.ImageField(default='kisan.jpg', upload_to='Story_pics')
+    blogtype=models.CharField(max_length=500)
     
     def timeduraction(self):
         return (Sowing_date - Harvest_date)

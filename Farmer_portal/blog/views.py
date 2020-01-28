@@ -16,7 +16,32 @@ from django.views.generic import (
     DeleteView
 )
 
-
+def typecon(request):
+    cat=request.POST.get('cat','')
+    loc=request.POST.get('location','')
+    data ={} 
+    if loc=='ALL' and cat=='ALL':
+        context = {
+        'location':Post.objects.values('location').distinct(),
+        'cat':Post.objects.values('category').distinct(),
+        'posts': Post.objects.all(),
+        'data': data,
+        }
+    elif loc!='ALL' and cat=='ALL':
+        context = {
+        'location':Post.objects.values('location').distinct(),
+        'posts': Post.objects.filter(location=loc) ,
+        'cat':Post.objects.values('category').distinct(),
+        'data': data,
+    }        
+    else:
+        context = {
+        'location':Post.objects.values('location').distinct(),
+        'posts': Post.objects.filter(category=cat) ,
+        'cat':Post.objects.values('category').distinct(),
+        'data': data,
+    }
+    return render(request, 'blog/home.html', context)
 
 '''def home(request):
     if request.method == 'POST': 
@@ -46,6 +71,8 @@ from django.views.generic import (
     else: 
         data ={} 
     context = {
+        'location':Post.objects.values('location').distinct(),
+        'cat':Post.objects.values('category').distinct(),
         'posts': Post.objects.all(),
         'data': data,
         'likes':Like.objects.all(),

@@ -1,11 +1,44 @@
 {% extends "blog/base.html" %}
 {% block content %}
-<input class="form-control" id="myInput" type="text" placeholder="Search.."><br /><br />
-{% for post in posts|dictsort:'location' %}
-{% ifchanged %} {{post.location}}{% endifchanged %} 
-{% endfor %}
+  <form action="/typecon/" method="POST">{% csrf_token %}
+  
+  <select name="location">
+    <option name="ALL">ALL</option>
+    {% for l in location %}
+    <option name="{{l.location}}">{{l.location}}</option>
+    {% endfor %}
+  </select>
+  <select name="cat">
+    <option name="ALL">ALL</option>
+    {% for l in cat %}
+    <option name="{{l.category}}">{{l.category}}</option>
+    {% endfor %}
+  </select>
+  <input type="submit" />
+  </form>
 {% for post in posts %}
-<div id="myTable">
+    <div id="myTable">
+        <article  class="media content-section">
+          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ post.author }}</a>
+              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+              <a class="mr-2" href="#">{{post.location}}</a>
+              <div class="feed" id="feed1">
+                <div class="heart " id="like1" rel="like"></div>
+                <div class="likeCount" id="likeCount1">14</div>
+              </div>
+            </div>
+            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+            
+          </div>
+          
+        </article>
+    </div>     
+    {% endfor %}
+    {% if is_paginated %}
 
   <article class="media content-section">
     <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
