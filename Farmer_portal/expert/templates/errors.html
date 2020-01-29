@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+.car {
+  width: 330px;
+  animation: start 5s infinite;
+}
+.car-top {
+  position: relative;
+  width: 330px;
+  height: 80px;
+  overflow: hidden;
+}
+.front {
+  width: 70px;
+  height: 50px;
+  background-color: #000;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-radius: 0 30px 0 0;
+}
+.body {
+  width: 200px;
+  height: 80px;
+  background-color: #000;
+  position: absolute;
+  left: 60px;
+  border-radius: 10px 10px 0 0;
+}
+.body .window-1 {
+  width: 80px;
+  height: 30px;
+  background-color: #fff;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border-radius: 10px 0 0 0;
+}
+.body .window-2 {
+  width: 80px;
+  height: 30px;
+  background-color: #fff;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 0 10px 0 0;
+}
+.back {
+  width: 60px;
+  height: 50px;
+  background-color: #000;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  border-radius: 10px 0 0 0;
+}
+.whell {
+  height: 50px;
+  width: 250px;
+  position: relative;
+  margin: 0 auto;
+  margin-top: -20px;
+}
+.whell div h1 {
+  margin: 4px 0 0 0;
+  color: #fff;
+  text-align: center;
+}
+.whell-1 {
+  width: 50px;
+  height: 50px;
+  background-color: #111;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  border: 5px #fff solid;
+  border-radius: 100%;
+  -webkit-animation: round 1s;
+  animation: round 1s infinite linear ;
+}
+.whell-2 {
+  width: 50px;
+  height: 50px;
+  background-color: #111;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border: 5px #fff solid;
+  border-radius: 100%;
+  -webkit-animation: round 1s;
+  animation: round 1s infinite linear ;
+}
+@keyframes round {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(480deg);
+  }
+}
+@keyframes start {
+  from {
+    margin-left: 0;
+  }
+  to {
+    margin-left: 800px;
+  }
+}
+a {
+  display: inline-block;
+  background-color: #1984c3;
+  color: #fff;
+  font-size: 12px;
+  font-family: Courier, sans-serif;
+  padding: 1em 5em;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 0.5em;
+  border-bottom: 0.25em solid #0f5177;
+  -moz-transition: 0.1s;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+  box-shadow: 0 2px 3px #ccc;
+  position: relative;
+}
+
+a:hover {
+  background-color: #1e9feb;
+  border-bottom-width: 0;
+  margin-top: 0.2em;
+}
+
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+<h1>ERROR : {{msg}}</h1>
+</center>
+<div class="car">
+<div class="car-top">
+<div class="front">
+
+</div>
+<div class="body">
+  <div class="window-1"></div>
+  <div class="window-2"></div>
+</div>
+<div class="back">
+
+</div>
+</div>
+<div class="whell">
+  <div class="whell-1"><h1>+</h1></div>
+  <div class="whell-2"><h1>+</h1></div>
+</div>
+</div>
+<center>
+<a href="/registration/getuser/">add user</a>
+<a href="/registration/deluser/">delete user</a>
+<a href="/adminuser/distcharge/">total amounts</a>
+<a href="/adminuser/logout/">logout</a>
+</center>
+</body>
+</html>
