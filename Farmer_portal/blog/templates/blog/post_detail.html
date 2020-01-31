@@ -5,7 +5,8 @@
     <div class="media-body">
       <div class="article-metadata">
         <a class="mr-2" href="{% url 'user-posts' object.author.username %}">{{ object.author }}</a>
-        <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
+        <small class="text-muted">{{ object.date_posted|timesince:today_date }}</small>
+        <a class="mr-2" href="#">{{object.location}}</a>
         
         {% if object.author == user %}
           <div>
@@ -14,10 +15,19 @@
           </div>
         {% endif %}
       </div>
+      <img style="float: right;" class="thumbnail account-img" src="{{ object.image.url }}">
       <h2 class="article-title">{{ object.title }}</h2>
-       <img style="float: right;" class="thumbnail account-img" src="{{ object.image.url }}">
-
-      <p class="article-content">{{ object.content }}</p>
+      
+      <p class="article-content"><b>Seed:</b> {{ post.seed }}</p>
+       <p class="article-content"><b>fertilizers:</b> {{ post.fertilizers }}</p>
+       <p class="article-content"><b>category:</b> {{ post.category }}</p>
+       <p class="article-content"><b>area:</b> {{ post.area }} Square meter  |  <b>Net Profit:</b> {{post.net_profit_in_INR_rupee}}</p>
+       <p class="article-content"><b>duraction:</b> {{ post.Sowing_date }} <b>TO</b> {{ post.Harvest_date }}</p>
+      
+      <p class="article-content"><b>treatment details:</b> </p>
+       &nbsp; &nbsp; &nbsp;{{ post.treatment_details }}
+       <p class="article-content"><b>{{user}}'s success story:</b> </p>
+       &nbsp; &nbsp; &nbsp;{{ post.Tell_your_story }}
     </div>
   </article>
 {% endblock content %}

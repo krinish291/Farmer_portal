@@ -20,9 +20,7 @@
   </select>
   <input type="submit" />
 </form>
-<input type="radio" name="gender" value="ALL" checked> ALL
-<input type="radio" name="gender" value="populer">Most populer
-<input type="radio" name="gender" value="other"> Other
+
 {% for post in posts %}
 <div id="myTable">
   <article class="media content-section">
@@ -30,7 +28,7 @@
     <div class="media-body">
       <div class="article-metadata">
         <a class="mr-2" href="#">{{ post.author }}</a>
-        <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+        <small class="text-muted">{{ post.date_posted|timesince:today_date }}</small>
         <a class="mr-2" href="#">{{post.location}}</a>
         {% if not user.is_authenticated %}
         <div class="feed" id="feed1">
@@ -45,10 +43,18 @@
         </div>
         {% endif %}
       </div>
-      <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
       <img style="float: right;" class="thumbnail account-img" src="{{ post.image.url }}"/>
-      <p class="article-content">{{ post.content }}</p>
-
+      <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+      
+       <p class="article-content"><b>Seed:</b> {{ post.seed }}</p>
+       <p class="article-content"><b>fertilizers:</b> {{ post.fertilizers }}</p>
+       <p class="article-content"><b>category:</b> {{ post.category }}</p>
+       <p class="article-content"><b>area:</b> {{ post.area }} Square meter  |  <b>Net Profit:</b> {{post.net_profit_in_INR_rupee}}₹</p>
+       <p class="article-content"><b>duraction:</b> {{ post.Sowing_date }} <b>TO</b> {{ post.Harvest_date }}</p>
+       <p class="article-content"><b>treatment details:</b> </p>
+       &nbsp; &nbsp; &nbsp;{{ post.treatment_details }}
+       <p class="article-content"><b>{{user}}'s success story:</b> </p>
+       &nbsp; &nbsp; &nbsp;{{ post.Tell_your_story }}
     </div>
 
   </article>

@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'Farmer_portal.wsgi.application'
 DATABASES = {
     'default': {
        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'farmer_portal',
+        'NAME': 'Farmer_DB',
 		'HOST': 'localhost',
 		'PORT': '3306',
 		'USER': 'root',
