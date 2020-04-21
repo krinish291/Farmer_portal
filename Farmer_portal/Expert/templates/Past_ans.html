@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>image</th>
+      <th>Query</th>
+      <th>Answer</th>
+      <th>Update</th>
+    </tr>
+  </thead>
+  {% for q in que %}
+  <form action="/Expert/updateQueryans/" method="POST">{% csrf_token %}
+    <tbody>
+      <tr>
+        <input type="hidden" name="qans" value="{{q.Query_Reply}}">
+        <input type="hidden" name="qid" value="{{q.id}}">
+        <td><img class="thumbnail account-img" src="{{ q.Query_id.image.url }}" /></td>
+        <td>{{q.Query_id.Tell_your_Query}}</td>
+        <td>{{q.Query_Reply}}</td>
+        <td><button type="submit" class="btn btn-default">Update</button></td>
+      </tr>
+    </tbody>
+
+  </form>
+  {% endfor %}
+  {% endblock %}

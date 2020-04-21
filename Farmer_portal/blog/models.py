@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from PIL import Image
-
+from Expert.models import Expert
 Category_CHOICES = [
    
     ('Grains','Grains'),
@@ -75,9 +75,18 @@ area_type=(
     ('Hectare','Hectare'),
     ('Square Meter','Square Meter',)
 )
-def findarea(a):
-    i=2*a
-    return i
+def findarea(area,area_type):
+    if area_type=="Bigha":
+        area=area*1621.344
+    elif area_type=="Guntha":
+        area=area*101.17
+    elif area_type=="Acre":
+        area=area*4046.86
+    elif area_type=="Hectare":
+        area=area*10000
+    else:
+        area=area*1
+    return int(area)
 
 
 # Create your models here.
@@ -103,7 +112,7 @@ class Post(models.Model):
      #   return f'{self.user.username} Post' + self.title
 
     def save(self,*args, **kwargs):
-        self.area=findarea(self.area)
+        self.area=findarea(self.area,self.area_type)
         super(Post, self).save(*args, **kwargs)
 
         img = Image.open(self.image.path)
@@ -119,8 +128,29 @@ class Post(models.Model):
    
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
+    
+    def likelist(self):
+        l=[]
+        for i in self.likes.all():
+            l.append(i.user_id.id)
+        print(l)
+        return l
 
 class Like(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     Post_id = models.ForeignKey(Post, on_delete=models.CASCADE ,related_name="likes")
    
+class Query(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.CharField(max_length=15, choices=Category_CHOICES, default='Grains')    
+    image = models.ImageField(default='kisan.jpg', upload_to='query_pics')
+    Tell_your_Query = models.TextField(default="")
+    is_answer =models.BooleanField(default=False)
+
+    def get_absolute_url(self):
+        return reverse('post-detail')
+
+class Query_Answer(models.Model):
+    Query_id = models.ForeignKey(Query, on_delete=models.CASCADE)
+    Expert_id = models.ForeignKey(Expert, on_delete=models.CASCADE)
+    Query_Reply = models.TextField(default="")

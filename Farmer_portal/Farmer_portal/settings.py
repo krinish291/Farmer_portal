@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'pwa',
-    'expert',
+    'Expert',
 
     #allauths    
     'allauth',

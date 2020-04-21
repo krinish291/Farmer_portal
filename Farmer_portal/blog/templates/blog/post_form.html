@@ -9,14 +9,14 @@
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" id="post_btn" onclick="compare()" type="submit" disabled>Post</button>
+                <button class="btn btn-outline-info" id="post_btn" onclick="myFunction()" type="submit">Post</button>
             </div>
         </form>
     </div>
 {% block javascript %}
 <script>
     document.getElementById("id_Harvest_date").onchange = function() {myFunction()};
-    
+    document.getElementById("id_Sowing_date").onchange = function() {myFunction()};
     function myFunction() {
         var startDt = document.getElementById("id_Sowing_date").value;
         var endDt = document.getElementById("id_Harvest_date").value;
@@ -24,7 +24,7 @@
         {
           window.alert("Your not Enter Valid Sowing Or Harvest  Date");
           document.getElementById("post_btn").disabled = true;
-          
+        
         }
         else
         {

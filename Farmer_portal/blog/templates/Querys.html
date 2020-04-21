@@ -1,0 +1,25 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<label style="font-size: 20px;">Pending... Queries</label>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Images</th>
+        <th>Cetagoies</th>
+        <th>Queries</th>
+        <th>answer</th>
+      </tr>
+    </thead>
+{% for query in querys reversed  %}
+    <tbody>
+      <tr>
+        <td><img class="thumbnail account-img" src="{{ query.image.url }}"/></td>
+        <td>{{query.category}}</td>
+        <td>{{query.Tell_your_Query}}</td>
+        <td>pending...</td>
+      </tr>
+    </tbody>
+    {% endfor %}
+    </table>
+  
+{% endblock %}

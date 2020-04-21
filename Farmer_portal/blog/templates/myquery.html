@@ -1,0 +1,43 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<br />
+<br /><br />
+
+
+<div class="content-section">
+  <form method="POST" action="/addquery/" enctype="multipart/form-data">{% csrf_token %}
+
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">My new Query</legend>
+
+
+      <div id="div_id_category" class="form-group"> <label for="id_category" class=" requiredField">
+          Category<span class="asteriskField">*</span> </label>
+        <div class=""> <select name="catagorys" class="select form-control" id="id_category">
+            <option value="Grains" selected="">Grains</option>
+            <option value="pulses">pulses</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Fruits">Fruits</option>
+            <option value="Other">Other</option>
+
+          </select> </div>
+      </div>
+      <div id="div_id_image" class="form-group"> <label for="id_image" class=" requiredField">
+          Image<span class="asteriskField">*</span> </label>
+        <div class=""> <input type="file" name="myimage" accept="image/*" class="clearablefileinput form-control-file"
+            id="id_image"> </div>
+      </div>
+      <div id="div_id_Tell_your_Query" class="form-group"> <label for="id_Tell_your_Query" class=" requiredField">
+          Tell your Query<span class="asteriskField">*</span> </label>
+        <div class=""> <textarea name="discription" cols="40" rows="10" class="textarea form-control" required=""
+            id="id_Tell_your_Query"></textarea> </div>
+      </div>
+
+    </fieldset>
+    <div class="form-group">
+      <button class="btn btn-outline-info" id="post_btn" onclick="myFunction()" type="submit">Post</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

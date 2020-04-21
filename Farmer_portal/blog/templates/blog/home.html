@@ -1,23 +1,52 @@
 {% extends "blog/base.html" %}
 {% block content %}
 <form action="/filter/" method="POST">{% csrf_token %}
-
+  <b>Select Location:</b>
   <select name="location">
     <option name="ALL">ALL</option>
     {% for l in posts|dictsort:'location' %}
     {%ifchanged%}
-    <option name="{{l.location}}">{{l.location}}</option>
+    <!-- <option name="{{l.location}}">{{l.location}}</option>-->
+    <option name="Rajkot">Rajkot</option>
+    <option name="Mehsana">Mehsana</option>
+    <option name="Ahmedabad">Ahmedabad</option>
+    <option name="Anand">Anand</option>
+    <option name="Dahod">Dahod</option>
+    <option name="Kheda">Kheda</option>
+    <option name="Vadodara">Vadodara</option>
+    <option name="Panchmahal">Panchmahal</option>
+    <option name="Aravalli">Aravalli</option>
+    <option name="Banaskantha">Banaskantha</option>
+    <option name="Gandhinagar">Gandhinagar</option>
+    <option name="Patan">Patan</option>
+    <option name="Amreli">Amreli</option>
+    <option name="Bhavnagar">Bhavnagar</option>
+    <option name="Jamnagar">Jamnagar</option>
+    <option name="Junagadh">Junagadh</option>
+    <option name="Morbi">Morbi</option>
+    <option name="Sabarkantha">Sabarkantha</option>
+    <option name="Bharuch">Bharuch</option>
+    <option name="Dang">Dang</option>
+    <option name="Narmada">Narmada</option>
+    <option name="Navsari">Navsari</option>
+    <option name="Surat">Surat</option>
+    <option name="Valsad">Valsad</option>
     {%endifchanged%}
     {% endfor %}
-  </select>
+  </select>&nbsp;&nbsp;
+  <b>Select Category:</b>
   <select name="cat">
     <option name="ALL">ALL</option>
     {% for l in posts|dictsort:'category' %}
     {%ifchanged%}
-    <option name="{{l.category}}">{{l.category}}</option>
+    <option name="Grains">Grains</option>
+    <option name="pulses">pulses</option>
+    <option name="Vegetables">Vegetables</option>
+    <option name="Fruits">Fruits</option>
+    <option name="Other">Other</option>
     {%endifchanged%}
     {% endfor %}
-  </select>
+  </select>&nbsp;&nbsp;
   <input type="submit" />
 </form>
 
@@ -31,30 +60,40 @@
         <small class="text-muted">{{ post.date_posted|timesince:today_date }}</small>
         <a class="mr-2" href="#">{{post.location}}</a>
         {% if not user.is_authenticated %}
+
         <div class="feed" id="feed1">
           <div class="heart " id='H{{post.id}}' rel="like" disabled></div>
           <div class="likeCount" id="L{{post.id}}" style="margin-top: 0px;">{{post.likes.all|length}}</div>
         </div>
+
         {% endif %}
         {% if user.is_authenticated %}
+        {% if user.id in post.likelist %}
+        <div class="feed" id="feed1">
+          <div class="heart heartAnimation" id='H{{post.id}}' rel="unlike" disabled></div>
+          <div class="likeCount" id="L{{post.id}}" style="margin-top: 0px;">{{post.likes.all|length}}</div>
+        </div>
+        {% else %}
         <div class="feed" id="feed1">
           <div class="heart " id='H{{post.id}}' rel="like" disabled></div>
           <div class="likeCount" id="L{{post.id}}" style="margin-top: 0px;">{{post.likes.all|length}}</div>
         </div>
         {% endif %}
+        {% endif %}
       </div>
-      <img style="float: right;" class="thumbnail account-img" src="{{ post.image.url }}"/>
+      <img style="float: right;" class="thumbnail account-img" src="{{ post.image.url }}" />
       <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-      
-       <p class="article-content"><b>Seed:</b> {{ post.seed }}</p>
-       <p class="article-content"><b>fertilizers:</b> {{ post.fertilizers }}</p>
-       <p class="article-content"><b>category:</b> {{ post.category }}</p>
-       <p class="article-content"><b>area:</b> {{ post.area }} Square meter  |  <b>Net Profit:</b> {{post.net_profit_in_INR_rupee}}₹</p>
-       <p class="article-content"><b>duraction:</b> {{ post.Sowing_date }} <b>TO</b> {{ post.Harvest_date }}</p>
-       <p class="article-content"><b>treatment details:</b> </p>
-       &nbsp; &nbsp; &nbsp;{{ post.treatment_details }}
-       <p class="article-content"><b>{{user}}'s success story:</b> </p>
-       &nbsp; &nbsp; &nbsp;{{ post.Tell_your_story }}
+
+      <p class="article-content"><b>Seed:</b> {{ post.seed }}</p>
+      <p class="article-content"><b>fertilizers:</b> {{ post.fertilizers }}</p>
+      <p class="article-content"><b>category:</b> {{ post.category }}</p>
+      <p class="article-content"><b>area:</b> {{ post.area }} Square meter | <b>Net Profit:</b>
+        {{post.net_profit_in_INR_rupee}}₹</p>
+      <p class="article-content"><b>duraction:</b> {{ post.Sowing_date }} <b>TO</b> {{ post.Harvest_date }}</p>
+      <p class="article-content"><b>treatment details:</b> </p>
+      &nbsp; &nbsp; &nbsp;{{ post.treatment_details }}
+      <p class="article-content"><b>{{post.author}}'s success story:</b> </p>
+      &nbsp; &nbsp; &nbsp;{{ post.Tell_your_story }}
     </div>
 
   </article>

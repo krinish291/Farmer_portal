@@ -1,28 +1,28 @@
 {% extends "blog/base.html" %}
 {% block content %}
-    <h1>About Page</h1>
-    <form method="post"  class="col-md-6 col-md-offset-3">
-        {% csrf_token %}
-        <div class="input-group">
-          <input type="text" class="form-control" name="city" placeholder="Search">
+<h1>About Page</h1>
+<form method="post" class="col-md-6 col-md-offset-3">
+  {% csrf_token %}
+  <div class="input-group">
+    <input type="text" class="form-control" name="city" placeholder="Search">
 
-          <button class="btn btn-default" type="submit">
-            <i class="fa fa-search" aria-hidden="true"></i>
-          </button>
+    <button class="btn btn-default" type="submit">
+      <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
 
-        </form>
-        </div>
-        
+</form>
+</div>
 
-          {% if data %}
 
-          <div class="col-12">
-            <h3>country code : {{data.country_code}}</h1>
-              <h5>coordinate : {{data.coordinate}}</h5>
-              <h5>temp : {{data.temp}} </h5>
-              <h5>pressure : {{data.pressure}} </h5>
-              <h5>humidity : {{data.humidity}}</h5>
-          </div>
+{% if data %}
 
-          {% endif %}
+<div class="col-12">
+  <h3>country code : {{data.country_code}}</h1>
+    <h5>coordinate : {{data.coordinate}}</h5>
+    <h5>temp : {{data.temp}} </h5>
+    <h5>pressure : {{data.pressure}} </h5>
+    <h5>humidity : {{data.humidity}}</h5>
+</div>
+
+{% endif %}
 {% endblock content %}
