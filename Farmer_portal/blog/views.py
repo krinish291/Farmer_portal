@@ -7,6 +7,7 @@ import urllib.request
 from django.http import JsonResponse
 from .models import Post
 from .models import Like
+from datetime import datetime,date
 from django.contrib.auth.models import User
 from django.views.generic import (
     ListView,
@@ -84,6 +85,13 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['today_date'] = date(date.today().year,date.today().month,date.today().day)  
+        return context
     
 
 
@@ -100,11 +108,17 @@ class UserPostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['today_date'] = date(date.today().year,date.today().month,date.today().day)  
+        return context
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content','location','seed','fertilizers','treatment_details','category','Sowing_date','Harvest_date','area','net_profit','image']
+    fields = ['title', 'location','seed','fertilizers','treatment_details','category','Sowing_date','Harvest_date','area','area_type','net_profit_in_INR_rupee','Tell_your_story','image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -113,7 +127,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content','location','seed','fertilizers','treatment_details','category','Sowing_date','Harvest_date','area','net_profit','image']
+    fields = ['title','location','seed','fertilizers','treatment_details','category','Sowing_date','Harvest_date','area','area_type','net_profit_in_INR_rupee', 'Tell_your_story','image']
 
     def form_valid(self, form):
         form.instance.author = self.request.user

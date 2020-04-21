@@ -9,8 +9,30 @@
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Post</button>
+                <button class="btn btn-outline-info" id="post_btn" onclick="compare()" type="submit" disabled>Post</button>
             </div>
         </form>
     </div>
+{% block javascript %}
+<script>
+    document.getElementById("id_Harvest_date").onchange = function() {myFunction()};
+    
+    function myFunction() {
+        var startDt = document.getElementById("id_Sowing_date").value;
+        var endDt = document.getElementById("id_Harvest_date").value;
+        if( (new Date(startDt).getTime() >= new Date(endDt).getTime()))
+        {
+          window.alert("Your not Enter Valid Sowing Or Harvest  Date");
+          document.getElementById("post_btn").disabled = true;
+          
+        }
+        else
+        {
+            document.getElementById("post_btn").disabled = false;
+        }
+   
+  }
+    
+    </script>   
+{% endblock %}
 {% endblock content %}
