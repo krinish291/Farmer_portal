@@ -1,0 +1,25 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<label style="font-size: 20px;"> Queries</label>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Images</th>
+        <th>Cetagoies</th>
+        <th>Queries</th>
+        <th>answer</th>
+      </tr>
+    </thead>
+{% for query in ans_query reversed  %}
+    <tbody>
+      <tr>
+        <td><img class="thumbnail account-img" src="{{ query.Query_id.image.url }}"/></td>
+        <td>{{query.Query_id.category}}</td>
+        <td>{{query.Query_id.Tell_your_Query}}</td>
+        <td>{{query.Query_Reply}}</td>
+      </tr>
+    </tbody>
+
+{% endfor %}
+</table>
+{% endblock %}

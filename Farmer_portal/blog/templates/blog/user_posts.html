@@ -2,19 +2,38 @@
 {% block content %}
     <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
     {% for post in posts %}
-        <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-            </div>
-            <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
-          
-            
-            <p class="article-content">{{ post.content }}</p>
-          </div>
-        </article>
+
+    <article class="media content-section">
+     
+    <br/>
+    <img class="rounded-circle article-img" src="{{ post.author.profile.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="#">{{ post.author }}</a>
+        <small class="text-muted">{{ post.date_posted|timesince:today_date }}</small>
+        <a class="mr-2" href="#">{{post.location}}</a>
+        {% if post.author == request.user %}
+        <div>
+          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Update</a>
+          <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
+        </div>
+      {% endif %}
+      </div>
+      <img style="float: right;" class="thumbnail account-img" src="{{ post.image.url }}"/>
+      <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+      
+       <p class="article-content"><b>Seed:</b> {{ post.seed }}</p>
+       <p class="article-content"><b>fertilizers:</b> {{ post.fertilizers }}</p>
+       <p class="article-content"><b>category:</b> {{ post.category }}</p>
+       <p class="article-content"><b>area:</b> {{ post.area }} Square meter  |  <b>Net Profit:</b> {{post.net_profit_in_INR_rupee}}₹</p>
+       <p class="article-content"><b>duraction:</b> {{ post.Sowing_date }} <b>TO</b> {{ post.Harvest_date }}</p>
+       <p class="article-content"><b>treatment details:</b> </p>
+       &nbsp; &nbsp; &nbsp;{{ post.treatment_details }}
+       <p class="article-content"><b>{{user}}'s success story:</b> </p>
+       &nbsp; &nbsp; &nbsp;{{ post.Tell_your_story }}
+    </div>
+
+  </article>
     {% endfor %}
     {% if is_paginated %}
 

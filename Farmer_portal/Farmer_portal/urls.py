@@ -25,8 +25,8 @@ urlpatterns = [
    path('admin/', admin.site.urls),
     path('register/', user_views.register, name='register'),
     path('profile/', user_views.profile, name='profile'),
-    path('expert/',include('expert.urls')),
-    path('blog',include('blog.urls')),
+    path('Expert/',include('Expert.urls')),
+    path('blog/',include('blog.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('accounts/', include('allauth.urls')),
@@ -51,8 +51,9 @@ urlpatterns = [
          ),
          name='password_reset_complete'),
     path('', include('blog.urls')),
-    path('', include('pwa.urls')),
+ #   path('', include('pwa.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
