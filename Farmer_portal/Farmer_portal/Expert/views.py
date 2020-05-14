@@ -26,7 +26,7 @@ def auth_view(request):
                     print(request.session['username'])
                     return HttpResponseRedirect('/Expert/loggedin/')
                 else:
-                    messages.info(request, 'You are not varify ')
+                    messages.info(request, 'You are not varified ')
                     return HttpResponseRedirect('/Expert/login/')
             else:
                 return HttpResponseRedirect('/Expert/invalidlogin/')
