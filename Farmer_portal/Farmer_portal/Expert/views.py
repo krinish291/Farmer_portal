@@ -29,9 +29,9 @@ def auth_view(request):
                     messages.info(request, 'You are not varified ')
                     return HttpResponseRedirect('/Expert/login/')
             else:
-                return HttpResponseRedirect('/Expert/invalidlogin/')
+                return HttpResponseRedirect('/Expert/login/')
     except Expert.DoesNotExist:
-        return HttpResponseRedirect('/Expert/userdoesnotexist')
+        return HttpResponseRedirect('/Expert/login/')
 
 
 def loggedin(request):
